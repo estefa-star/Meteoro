@@ -1,0 +1,101 @@
+/* avisos.css — todo el aspecto visual de los avisos. Editá libremente. */
+
+/* ===== TU PALETA ===== */
+#avisos-root {
+  --av-amarillo: #FFD23F;   /* protagonista */
+  --av-tinta:    #1F1A17;   /* bordes y texto */
+  --av-papel:    #FFF6D6;   /* fondo de los iconos */
+
+  /* arcoíris (el js usa estos 7 para el confeti) */
+  --av-1: #E63946;  /* rojo */
+  --av-2: #F77F00;  /* naranja */
+  --av-3: #FFD23F;  /* amarillo */
+  --av-4: #3BB273;  /* verde */
+  --av-5: #2D9CDB;  /* azul */
+  --av-6: #5B4BC4;  /* índigo */
+  --av-7: #9B51E0;  /* violeta */
+
+  /* franja de arcoíris con cortes duros */
+  --av-franja: linear-gradient(90deg,
+    var(--av-1) 0 14.28%, var(--av-2) 0 28.57%, var(--av-3) 0 42.85%, var(--av-4) 0 57.14%,
+    var(--av-5) 0 71.42%, var(--av-6) 0 85.71%, var(--av-7) 0);
+
+  --av-fuente-titulo: "Arial Black", "Segoe UI Black", "Helvetica Neue", Arial, sans-serif;
+  --av-fuente-texto: "Trebuchet MS", Arial, sans-serif;
+}
+
+/* ===== CONTENEDOR ===== */
+#avisos-root {
+  position: fixed; inset: 0; pointer-events: none; z-index: 9999; overflow: hidden;
+  font-family: var(--av-fuente-titulo); color: var(--av-tinta);
+}
+
+/* ===== BANNER DE DIFICULTAD ===== */
+.av-banner {
+  position: absolute; left: -6%; right: -6%; top: 30%;
+  text-align: center; rotate: -3deg; padding: 22px 0 18px;
+  background: var(--av-amarillo);
+  border-top: 4px solid var(--av-tinta); border-bottom: 4px solid var(--av-tinta);
+  box-shadow: 0 8px 0 var(--av-tinta);
+}
+.av-banner::before, .av-banner::after {
+  content: ""; position: absolute; left: 0; right: 0; height: 12px; background: var(--av-franja);
+}
+.av-banner::before { top: 0; }
+.av-banner::after  { bottom: 0; }
+.av-banner small { display: block; font-size: .95rem; letter-spacing: .35em; text-transform: uppercase; margin-bottom: 2px; }
+.av-banner b { display: block; font-size: clamp(2.6rem, 10vw, 5.5rem); line-height: 1; letter-spacing: .02em; text-shadow: 4px 4px 0 var(--av-1); }
+.av-banner span { display: block; margin-top: 8px; font: 700 1.05rem var(--av-fuente-texto); }
+
+/* ===== TARJETAS DE INDICACIÓN ===== */
+.av-card {
+  position: absolute; left: 50%; bottom: 13%; margin-left: -180px; width: 360px; box-sizing: border-box;
+  display: flex; align-items: center; gap: 16px; padding: 22px 20px 16px; rotate: -2deg;
+  background: var(--av-amarillo); border: 4px solid var(--av-tinta); border-radius: 16px;
+  box-shadow: 7px 7px 0 var(--av-tinta);
+}
+.av-card::before {
+  content: ""; position: absolute; left: 0; right: 0; top: 0; height: 10px;
+  background: var(--av-franja); border-radius: 11px 11px 0 0; border-bottom: 3px solid var(--av-tinta);
+}
+.av-card h3 { margin: 0; font-size: 1.35rem; text-transform: uppercase; letter-spacing: .04em; }
+.av-card p  { margin: 4px 0 0; font: 700 .95rem/1.25 var(--av-fuente-texto); }
+
+/* ===== TOAST ===== */
+.av-toast {
+  position: absolute; left: 50%; top: 11%; translate: -50% 0; rotate: 2deg; white-space: nowrap;
+  padding: 10px 22px; background: var(--av-amarillo); border: 4px solid var(--av-tinta);
+  border-radius: 12px; box-shadow: 5px 5px 0 var(--av-tinta); font-size: 1.1rem; text-transform: uppercase;
+}
+
+/* ===== CONFETI ===== */
+.av-confeti { position: absolute; width: 12px; height: 12px; border: 2px solid var(--av-tinta); }
+
+/* ===== ICONOS (colores y trazos) ===== */
+.av-ico { flex: none; width: 92px; height: 76px; background: var(--av-papel); border: 3px solid var(--av-tinta); border-radius: 12px; }
+.av-ico * { stroke: var(--av-tinta); stroke-width: 3; stroke-linejoin: round; }
+
+/* esquivar */
+.av-flecha-i { fill: var(--av-1); }
+.av-flecha-d { fill: var(--av-5); }
+.av-cuerpo   { fill: var(--av-2); }
+.av-cara     { fill: var(--av-amarillo); }
+.av-ojo      { fill: var(--av-tinta); stroke: none; }
+/* lanzar */
+.av-pista { fill: none; stroke-opacity: .18; stroke-width: 7; }
+.av-anillo { fill: none; stroke: var(--av-4); stroke-width: 7; stroke-linecap: round; }
+.av-bola  { fill: var(--av-1); }
+.av-brillo { fill: #fff; opacity: .8; stroke: none; }
+
+/* ===== ANIMACIONES DE LOS ICONOS (ciclo de 1.6s) ===== */
+.av-cabeza { animation: av-sway 1.6s ease-in-out infinite; transform-origin: 46px 64px; }
+.av-flecha-i { animation: av-fl 1.6s infinite; }
+.av-flecha-d { animation: av-fr 1.6s infinite; }
+@keyframes av-sway { 0%,100% { transform: translateX(-16px) rotate(-14deg); } 50% { transform: translateX(16px) rotate(14deg); } }
+@keyframes av-fl { 0%,100% { opacity: 1; } 50% { opacity: .15; } }
+@keyframes av-fr { 0%,100% { opacity: .15; } 50% { opacity: 1; } }
+
+.av-anillo { stroke-dasharray: 132; stroke-dashoffset: 132; transform: rotate(-90deg); transform-origin: 46px 38px; animation: av-fill 1.6s ease-in infinite; }
+.av-pelota { transform-origin: 46px 38px; animation: av-ball 1.6s ease-in infinite; }
+@keyframes av-fill { 0% { stroke-dashoffset: 132; } 75%,100% { stroke-dashoffset: 0; } }
+@keyframes av-ball { 0% { transform: scale(.6); } 75% { transform: scale(1.15); } 85% { transform: scale(.95); } 100% { transform: scale(.6); } }
